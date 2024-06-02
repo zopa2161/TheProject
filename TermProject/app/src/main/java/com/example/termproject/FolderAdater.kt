@@ -5,14 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.note_item.view.*
+import com.example.termproject.databinding.FolderItemBinding
+
+class FolderViewHolder(val binding: FolderItemBinding): RecyclerView.ViewHolder(binding.root)
 
 
-class FolderAdater(private val items: ArrayList<string>) :RecyclerView.Adapter<FolderAdater.ViewHolder>(){
-    class ViewHolder(itemView : View, ):RecyclerView.ViewHolder(itemView){
+class FolderAdater(val datas: ArrayList<Array<String>>) :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    override fun getItemCount(): Int = datas.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = FolderViewHolder(
+        FolderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+
+        //항목 뷰를 가지는 뷰 홀더를 준비하기 위해 자동 호출
+        val binding = (holder as FolderViewHolder).binding
+
+        binding.location.text = ""
+
+        binding.itemRoot.setOnClickListener {
+
+        }
+
 
     }
-
 
 
 }

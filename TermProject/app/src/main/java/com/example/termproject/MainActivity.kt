@@ -12,30 +12,35 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.recyclerview.widget.RecyclerView
 import com.example.termproject.ui.theme.TermProjectTheme
-//수정하기 수정해보기 ㅅㅅㅅㅅㅅㅅㅅ
 
 class MainActivity : AppCompatActivity() {
+    val databaseName = "trip"
+    val tableName = "folder"
+    private var sqLiteHelper: SQLiteHelper? = null
     var database :SQLiteDatabase? = null
+
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+        val binding = RecyclerViewBinding.inflate(layoutInflater)
+        recyclerView = root.recyclerView
+        recyclerView.adapter = FolderAdater()
+
+
+        database = openOrCreateDatabase(databaseName, MODE_PRIVATE,null)
+        database?.execSQL("create table if not exists ${tableName}"+
+        "(id integer PRIMARY KEY autoincrement,"+
+        )
+
+
+
 
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TermProjectTheme {
-        Greeting("Android")
-    }
-}
