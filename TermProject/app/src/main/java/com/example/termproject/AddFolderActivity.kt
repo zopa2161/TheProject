@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.RatingBar
+import androidx.activity.*
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Calendar
 
