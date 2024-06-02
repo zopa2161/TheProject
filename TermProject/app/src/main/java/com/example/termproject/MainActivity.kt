@@ -1,5 +1,6 @@
 package com.example.termproject
 
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,19 +15,11 @@ import com.example.termproject.ui.theme.TermProjectTheme
 //수정하기
 
 class MainActivity : ComponentActivity() {
+    var database :SQLiteDatabase? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            TermProjectTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
-        }
+
     }
 }
 
