@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.termproject.ui.theme.TermProjectTheme
-//수정하기 수정해보기
+//수정하기 수정해보기 ㅅㅅㅅㅅㅅㅅㅅ
 
 class MainActivity : AppCompatActivity() {
     var database :SQLiteDatabase? = null
