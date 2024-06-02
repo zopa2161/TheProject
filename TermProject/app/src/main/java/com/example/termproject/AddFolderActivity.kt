@@ -10,7 +10,7 @@ import androidx.activity.*
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Calendar
 
-class AddFolderActivityActivity : AppCompatActivity() {
+class AddFolderActivity : AppCompatActivity() {
     private var sqLiteHelper: SQLiteHelper? = null
     private var datePicker: DatePicker? = null
     private var ratingBar: RatingBar? = null
@@ -20,7 +20,7 @@ class AddFolderActivityActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.input_main)  // Set the content view to input_main.xml
+        setContentView(R.layout.activity_addfolder)  // Set the content view to input_main.xml
 
         datePicker = findViewById<DatePicker>(R.id.datePicker)
         ratingBar = findViewById<RatingBar>(R.id.ratingBar)
@@ -41,7 +41,7 @@ class AddFolderActivityActivity : AppCompatActivity() {
             // Save to database (you need to implement the insert function in SQLiteHelper)
             sqLiteHelper?.insertTravelItem(date, rating)
 
-            val intent = Intent(this@InputActivity, MainActivity::class.java)
+            val intent = Intent(this@AddFolderActivity, MainActivity::class.java)
             startActivity(intent)
         }
 
