@@ -7,10 +7,9 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.RatingBar
 import androidx.appcompat.app.AppCompatActivity
-import com.example.termproject_1.SQLiteHelper
 import java.util.Calendar
 
-class InputActivity : AppCompatActivity() {
+class AddFolderActivityActivity : AppCompatActivity() {
     private var sqLiteHelper: SQLiteHelper? = null
     private var datePicker: DatePicker? = null
     private var ratingBar: RatingBar? = null
