@@ -1,17 +1,24 @@
 package com.example.termproject
 
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.termproject.databinding.FolderItemBinding
 
 class FolderViewHolder(val binding: FolderItemBinding): RecyclerView.ViewHolder(binding.root)
 
 
-class FolderAdater(val datas: ArrayList<Array<String>>) :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class FolderAdapter(val datas: ArrayList<Array<String>>,
+                    val itemClickListener: (Int)->Unit) :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+
     override fun getItemCount(): Int = datas.size
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = FolderViewHolder(
         FolderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -26,8 +33,10 @@ class FolderAdater(val datas: ArrayList<Array<String>>) :RecyclerView.Adapter<Re
         binding.date.text = ""
         binding.rating.text = ""
         binding.itemRoot.setOnClickListener {
-
+            //클릭하면
             //여기서 포스트액티비티로 넘어가는 작업 수행
+            itemClickListener(//이 안에는 해당 데이터의 id값이 들어가야한다?)
+
 
         }
 
