@@ -22,9 +22,12 @@ class FolderAdater(val datas: ArrayList<Array<String>>) :RecyclerView.Adapter<Re
         //항목 뷰를 가지는 뷰 홀더를 준비하기 위해 자동 호출
         val binding = (holder as FolderViewHolder).binding
 
-        binding.location.text = ""
-
+        binding.location.text = ""//받아온 데이터 값을 주르륵 연결해야함
+        binding.date.text = ""
+        binding.rating.text = ""
         binding.itemRoot.setOnClickListener {
+
+            //여기서 포스트액티비티로 넘어가는 작업 수행
 
         }
 
