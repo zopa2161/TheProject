@@ -1,5 +1,6 @@
 package com.example.termproject
 
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -51,7 +52,11 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = FolderAdater(folders)//folders는 arraylist<array<String>>형태의 이중 리스트로
+        binding.recyclerView.adapter = FolderAdapter(folders, itemClickListener = {
+            val intent= Intent(this,PostActivity::class.java)
+
+            startActivity(intent)
+        })//folders는 arraylist<array<String>>형태의 이중 리스트로
         //sql에서 받아온 데이터값들임
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this,LinearLayoutManager.VERTICAL))
 
@@ -63,5 +68,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
 }
 
