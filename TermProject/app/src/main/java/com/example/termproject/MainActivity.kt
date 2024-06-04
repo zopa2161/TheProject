@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //액티비티가 시작하면 자동으로 데이터베이스 가져오기
-        database = openOrCreateDatabase(databaseName, MODE_PRIVATE,null)
+        database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
 
         /*
         database?.execSQL("create table if not exists ${tableName}"+
@@ -48,23 +48,24 @@ class MainActivity : AppCompatActivity() {
         //데이터 베이스에서 가져온 값을 Array<String>으로 만든 후 for문을 이용해 folders에 add 하기
 
 
-
-
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = FolderAdapter(folders, itemClickListener = {
-            val intent= Intent(this,PostActivity::class.java)
-
-            startActivity(intent)
-        })//folders는 arraylist<array<String>>형태의 이중 리스트로
+        binding.recyclerView.adapter = FolderAdapter(this, folders)
+        //folders는 arraylist<array<String>>형태의 이중 리스트로
         //sql에서 받아온 데이터값들임
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(this,LinearLayoutManager.VERTICAL))
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
+    }
 
+    fun clickFolder(num :Int){
 
-
-
-
+        val intent= Intent(this,PostActivity::class.java)
+        intent.putExtra("num",num)
+        startActivity(intent)
 
 
     }
