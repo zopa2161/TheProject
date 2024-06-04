@@ -20,7 +20,7 @@ import com.example.termproject.databinding.ActivityMainBinding
 import com.example.termproject.databinding.ActivityPostBinding
 import com.example.termproject.ui.theme.TermProjectTheme
 class PostActivity :AppCompatActivity(){
-
+    lateinit var posts: ArrayList<Array<String>>
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
@@ -28,14 +28,16 @@ class PostActivity :AppCompatActivity(){
         setContentView(binding.root)
 
         val numFolder = intent.getStringExtra("num")?.toInt()
-        
-        //여기서 데이터 베이스를 참조해서 numFolder  값을 가진 데이터들을 뽑아 
+        posts = ArrayList<Array<String>>()
+        //여기서 데이터 베이스를 쿼리해서 numFolder  값을 가진 데이터들을 뽑아
         //리스트로 만든다
 
     }
 
 
     fun clickPost(num :Int){
+        
+        //해당 아이디 등의 정보를 제공 받아서 해당 포스트 보여주기
 
     }
 

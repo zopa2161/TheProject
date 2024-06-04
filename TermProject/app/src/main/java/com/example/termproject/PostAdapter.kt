@@ -10,7 +10,7 @@ class PostAdapter (main: PostActivity,
 
 
     override fun getItemCount(): Int = datas.size
-    val mainA = main
+    val postA = main
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = FolderViewHolder(
@@ -31,7 +31,7 @@ class PostAdapter (main: PostActivity,
             //클릭하면
             //여기서 포스트액티비티로 넘어가는 작업 수행
             //itemClickListener()//이 안에는 해당 데이터의 id값이 들어가야한다?)
-            mainA.clickPost(binding.num.text.toString().toInt())// 인자로 눌려진 데이터의 값이 들어가야한다.
+            postA.clickPost(binding.num.text.toString().toInt())// 인자로 눌려진 데이터의 값이 들어가야한다.
 
         }
 
