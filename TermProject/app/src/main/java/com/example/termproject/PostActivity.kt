@@ -32,12 +32,24 @@ class PostActivity :AppCompatActivity(){
         val binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val folderNum = intent.getStringExtra("num")
+        binding.mainTextView.text = folderNum.toString()
+
 
         val numFolder = intent.getStringExtra("num")?.toInt()
         sqLiteHelper = SQLiteHelper(this)
         database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
         posts = ArrayList<Array<String>>()
+
+        binding.addButton.setOnClickListener {
+
+            val intent = Intent(this, WriteActivity::class.java)
+            intent.putExtra("folderNum",folderNum)
+            startActivity(intent)
+
+        }
+        /*
 
         val cursor = database?.rawQuery("select *"+
                 "from ${tableName}",null)
@@ -58,6 +70,8 @@ class PostActivity :AppCompatActivity(){
             }
 
         }
+
+         */
 
 
 

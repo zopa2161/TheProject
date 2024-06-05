@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     var database :SQLiteDatabase? = null
 
     lateinit var recyclerView: RecyclerView
-    lateinit var folders: ArrayList<Array<String>>
+    var folders: ArrayList<Array<String>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +39,11 @@ class MainActivity : AppCompatActivity() {
 
 
         //액티비티가 시작하면 자동으로 데이터베이스 가져오기
-        database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
+        //database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
         sqLiteHelper = SQLiteHelper(this)
-
-
-
-        folders = ArrayList<Array<String>>()
+        folders = sqLiteHelper?.getTravelList();
         //database에서 불러옴
+        /*
         val cursor = database?.rawQuery("select *"+
             "from ${tableName}",null)
 
@@ -62,7 +60,15 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+        */
+
         //리사이클러 뷰 연결
+        val test1 : Array<String> = arrayOf("1","2","3","4")
+        folders?.add(test1)
+        folders?.add(test1)
+        folders?.add(test1)
+        folders?.add(test1)
+        folders?.add(test1)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = FolderAdapter(this, folders)
         //folders는 arraylist<array<String>>형태의 이중 리스트로
@@ -80,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     fun clickFolder(num :Int){
 
         val intent= Intent(this,PostActivity::class.java)
-        intent.putExtra("num",num)
+        intent.putExtra("num",num.toString())
         startActivity(intent)
 
 

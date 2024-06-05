@@ -15,11 +15,11 @@ class FolderViewHolder(val binding: FolderItemBinding): RecyclerView.ViewHolder(
 
 
 class FolderAdapter(main: MainActivity,
-                    val datas: ArrayList<Array<String>>,
+                    val datas: ArrayList<Array<String>>?,
                     ) :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
 
-    override fun getItemCount(): Int = datas.size
+    override fun getItemCount(): Int = datas?.size ?:0
     val mainA = main
 
 
@@ -33,14 +33,14 @@ class FolderAdapter(main: MainActivity,
         val binding = (holder as FolderViewHolder).binding
 
         //datas[position][0] // 이런식으로 데이터를 사용해야할듯?
-        binding.num.text = datas[position][0]
+        binding.num.text = datas!![position][0]
         binding.location.text = datas[position][1]//받아온 데이터 값을 주르륵 연결해야함
         binding.date.text = datas[position][2]
         binding.rating.text = datas[position][3]
         binding.itemRoot.setOnClickListener {
             //클릭하면
             //여기서 포스트액티비티로 넘어가는 작업 수행
-
+            //mainA.clickFolder(position)//테스트 함수
             mainA.clickFolder(binding.num.text.toString().toInt())// 인자로 눌려진 데이터의 값이 들어가야한다.
 
         }

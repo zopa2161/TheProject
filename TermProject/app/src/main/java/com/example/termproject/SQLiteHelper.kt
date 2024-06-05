@@ -40,18 +40,20 @@ class SQLiteHelper(context: Context?) :
         private const val DATABASE_VERSION = 1
     }
 
-    fun getTravelList(): ArrayList<TravelListItem>? {
-        val result = ArrayList<TravelListItem>()
+    fun getTravelList(): ArrayList<Array<String>>? {
+        val result = ArrayList<Array<String>>()
         var db: SQLiteDatabase? = null
         try {
             db = this.readableDatabase
-            val cursor = db.rawQuery("SELECT Date, rate FROM TravelList", null)
+            val cursor = db.rawQuery("SELECT * FROM TravelList", null)
             //val cursor = db.rawQuery("SELECT Date, map, rate FROM TravelList", null)
             while (cursor.moveToNext()) {
-                val date = cursor.getString(0)
-                //val map = cursor.getString(1)
-                val rate = cursor.getInt(1)
-                result.add(TravelListItem(date, rate))
+                val id = cursor.getString(0)
+                val date = cursor.getString(1)
+                val map = cursor.getString(2)
+                val rate = cursor.getInt(3)
+                val temp : Array<String> = arrayOf(id.toString(), date, map, rate.toString())
+                result.add(temp)
                 //result.add(TravelListItem(date, map, rate))
             }
             cursor.close()
@@ -63,8 +65,8 @@ class SQLiteHelper(context: Context?) :
         return result
     }
 
-    fun getTravelDetail(): ArrayList<TravelDetailItem>? {
-        val result = ArrayList<TravelDetailItem>()
+    fun getTravelDetail(): ArrayList<Array<String>>? {
+        val result = ArrayList<Array<String>>()
         var db: SQLiteDatabase? = null
         try {
             db = this.readableDatabase
@@ -72,7 +74,8 @@ class SQLiteHelper(context: Context?) :
             while (cursor.moveToNext()) {
                 val picture = cursor.getString(0)
                 val txt = cursor.getString(1)
-                result.add(TravelDetailItem(picture, txt))
+                val temp : Array<String> = arrayOf(picture, txt)
+                result.add(temp)
             }
             cursor.close()
         } catch (e: Exception) {
@@ -90,5 +93,14 @@ class SQLiteHelper(context: Context?) :
             put("rate", rate)
         }
         db.insert("TravelList", null, contentValues)
+    }
+
+    fun insertTravelDetailItem(date: String, rate: Int) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put("Date", date)
+            put("rate", rate)
+        }
+        db.insert("TravelDetail", null, contentValues)
     }
 }
