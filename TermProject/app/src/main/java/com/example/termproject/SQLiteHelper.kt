@@ -65,16 +65,17 @@ class SQLiteHelper(context: Context?) :
         return result
     }
 
-    fun getTravelDetail(): ArrayList<Array<String>>? {
+    fun getTravelDetail(fid :Int): ArrayList<Array<String>>? {
         val result = ArrayList<Array<String>>()
         var db: SQLiteDatabase? = null
         try {
             db = this.readableDatabase
-            val cursor = db.rawQuery("SELECT picture, txt FROM TravelDetail", null)
+            val cursor = db.rawQuery("SELECT * FROM TravelDetail where d_ID = $fid", null)
             while (cursor.moveToNext()) {
-                val picture = cursor.getString(0)
-                val txt = cursor.getString(1)
-                val temp : Array<String> = arrayOf(picture, txt)
+                val picture = cursor.getString(1)
+                val txt = cursor.getString(2)
+                val id = cursor.getString(0)
+                val temp : Array<String> = arrayOf(id, picture, txt)
                 result.add(temp)
             }
             cursor.close()
@@ -95,9 +96,10 @@ class SQLiteHelper(context: Context?) :
         db.insert("TravelList", null, contentValues)
     }
 
-    fun insertTravelDetailItem(image:String, text:String) {
+    fun insertTravelDetailItem(image:String, text:String, fNum:Int) {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
+            put("d_Id", fNum)
             put("picture", image)
             put("txt", text)
         }

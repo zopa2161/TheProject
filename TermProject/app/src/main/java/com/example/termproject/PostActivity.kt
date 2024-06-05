@@ -24,7 +24,7 @@ class PostActivity :AppCompatActivity(){
     val tableName = "TraveDetail"
     var database :SQLiteDatabase? = null
     private var sqLiteHelper: SQLiteHelper? = null
-    lateinit var posts: ArrayList<Array<String>>
+    var posts: ArrayList<Array<String>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -37,10 +37,11 @@ class PostActivity :AppCompatActivity(){
         binding.mainTextView.text = folderNum.toString()
 
 
-        val numFolder = intent.getStringExtra("num")?.toInt()
+
         sqLiteHelper = SQLiteHelper(this)
         database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
         posts = ArrayList<Array<String>>()
+        posts = sqLiteHelper?.getTravelDetail(folderNum!!.toInt())
 
         binding.addButton.setOnClickListener {
 
@@ -50,6 +51,17 @@ class PostActivity :AppCompatActivity(){
             finish()
 
         }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = PostAdapter(this, posts)
+        //folders는 arraylist<array<String>>형태의 이중 리스트로
+        //sql에서 받아온 데이터값들임
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
 
 

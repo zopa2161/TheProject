@@ -40,10 +40,12 @@ class MainActivity : AppCompatActivity() {
         //리사이클러 뷰 연결
         val test1 : Array<String> = arrayOf("1","2","3","4")
         folders?.add(test1)
+        val test2 : Array<String> = arrayOf("2","2","3","4")
+        folders?.add(test2)
         folders?.add(test1)
         folders?.add(test1)
         folders?.add(test1)
-        folders?.add(test1)
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = FolderAdapter(this, folders)
         //folders는 arraylist<array<String>>형태의 이중 리스트로

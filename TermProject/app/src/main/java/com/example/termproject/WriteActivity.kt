@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +53,17 @@ class WriteActivity : AppCompatActivity(){
             }
 
             */
+            val imageString = binding.imageWrite.drawToBitmap().toString()
+            val textWriting = binding.txtWrite.text.toString()
+            sqLiteHelper?.insertTravelDetailItem(imageString,textWriting, folderNum!!.toInt())
+
+            val intent = Intent(this,PostActivity::class.java)
+            intent.putExtra("folderNum", folderNum)
+            startActivity(intent)
+            finish()
+
+
+
 
         }
 
