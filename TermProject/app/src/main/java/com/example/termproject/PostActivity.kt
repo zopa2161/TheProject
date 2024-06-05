@@ -20,17 +20,46 @@ import com.example.termproject.databinding.ActivityMainBinding
 import com.example.termproject.databinding.ActivityPostBinding
 import com.example.termproject.ui.theme.TermProjectTheme
 class PostActivity :AppCompatActivity(){
+    val databaseName = "trip"
+    val tableName = "TraveDetail"
+    var database :SQLiteDatabase? = null
+    private var sqLiteHelper: SQLiteHelper? = null
     lateinit var posts: ArrayList<Array<String>>
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
         val binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val folderNum = intent.getStringExtra("num")
+
         val numFolder = intent.getStringExtra("num")?.toInt()
+        sqLiteHelper = SQLiteHelper(this)
+        database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
         posts = ArrayList<Array<String>>()
-        //여기서 데이터 베이스를 쿼리해서 numFolder  값을 가진 데이터들을 뽑아
-        //리스트로 만든다
+
+        val cursor = database?.rawQuery("select *"+
+                "from ${tableName}",null)
+
+        if(cursor != null){
+            for (index in 0 until cursor.count){
+                cursor.moveToNext()
+                val id = cursor.getInt(0).toString()
+                val date = cursor.getString(1)
+                val map = cursor.getString(2)
+                val fk = cursor.getInt(3)
+                if(fk == folderNum?.toInt()){
+                    val tempList: Array<String> =
+                        arrayOf(id, date, map, fk.toString())
+                    posts.add(tempList)
+                }
+
+            }
+
+        }
+
+
 
     }
 

@@ -35,19 +35,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
+
+
         //액티비티가 시작하면 자동으로 데이터베이스 가져오기
         database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
+        sqLiteHelper = SQLiteHelper(this)
 
-        /*
-        database?.execSQL("create table if not exists ${tableName}"+
-                "(id integer PRIMARY KEY autoincrement,"+
-        )
-        */
+
 
         folders = ArrayList<Array<String>>()
-        //데이터 베이스에서 가져온 값을 Array<String>으로 만든 후 for문을 이용해 folders에 add 하기
+        //database에서 불러옴
+        val cursor = database?.rawQuery("select *"+
+            "from ${tableName}",null)
 
+        if(cursor != null){
+            for (index in 0 until cursor.count){
+                cursor.moveToNext()
+                val id = cursor.getInt(0).toString()
+                val date = cursor.getString(1)
+                val map = cursor.getString(2)
+                val rate = cursor.getInt(3).toString()
+                var tempList: Array<String> =
+                    arrayOf(id, date, map, rate)
+                folders.add(tempList)
+            }
 
+        }
+        //리사이클러 뷰 연결
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = FolderAdapter(this, folders)
         //folders는 arraylist<array<String>>형태의 이중 리스트로
@@ -61,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //리사이클러 뷰 아이템을 눌렀을 때
     fun clickFolder(num :Int){
 
         val intent= Intent(this,PostActivity::class.java)

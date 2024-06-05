@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.termproject.databinding.FolderItemBinding
 
+class PostViewHolder(val binding: FolderItemBinding): RecyclerView.ViewHolder(binding.root)
+
 class PostAdapter (main: PostActivity,
         val datas: ArrayList<Array<String>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -20,7 +22,7 @@ class PostAdapter (main: PostActivity,
 
 
         //항목 뷰를 가지는 뷰 홀더를 준비하기 위해 자동 호출
-        val binding = (holder as FolderViewHolder).binding
+        val binding = (holder as PostViewHolder).binding
 
         datas[position][0] // 이런식으로 데이터를 사용해야할듯?
         binding.num.text = ""
