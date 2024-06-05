@@ -33,7 +33,7 @@ class PostActivity :AppCompatActivity(){
         setContentView(binding.root)
 
 
-        val folderNum = intent.getStringExtra("num")
+        val folderNum = intent.getStringExtra("folderNum")
         binding.mainTextView.text = folderNum.toString()
 
 
@@ -47,31 +47,10 @@ class PostActivity :AppCompatActivity(){
             val intent = Intent(this, WriteActivity::class.java)
             intent.putExtra("folderNum",folderNum)
             startActivity(intent)
-
-        }
-        /*
-
-        val cursor = database?.rawQuery("select *"+
-                "from ${tableName}",null)
-
-        if(cursor != null){
-            for (index in 0 until cursor.count){
-                cursor.moveToNext()
-                val id = cursor.getInt(0).toString()
-                val date = cursor.getString(1)
-                val map = cursor.getString(2)
-                val fk = cursor.getInt(3)
-                if(fk == folderNum?.toInt()){
-                    val tempList: Array<String> =
-                        arrayOf(id, date, map, fk.toString())
-                    posts.add(tempList)
-                }
-
-            }
+            finish()
 
         }
 
-         */
 
 
 

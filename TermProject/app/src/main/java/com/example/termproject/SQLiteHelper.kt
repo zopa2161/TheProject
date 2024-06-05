@@ -95,11 +95,11 @@ class SQLiteHelper(context: Context?) :
         db.insert("TravelList", null, contentValues)
     }
 
-    fun insertTravelDetailItem(date: String, rate: Int) {
+    fun insertTravelDetailItem(image:String, text:String) {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
-            put("Date", date)
-            put("rate", rate)
+            put("picture", image)
+            put("txt", text)
         }
         db.insert("TravelDetail", null, contentValues)
     }

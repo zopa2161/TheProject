@@ -34,33 +34,8 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
-
-
-        //액티비티가 시작하면 자동으로 데이터베이스 가져오기
-        //database = openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
         sqLiteHelper = SQLiteHelper(this)
         folders = sqLiteHelper?.getTravelList();
-        //database에서 불러옴
-        /*
-        val cursor = database?.rawQuery("select *"+
-            "from ${tableName}",null)
-
-        if(cursor != null){
-            for (index in 0 until cursor.count){
-                cursor.moveToNext()
-                val id = cursor.getInt(0).toString()
-                val date = cursor.getString(1)
-                val map = cursor.getString(2)
-                val rate = cursor.getInt(3).toString()
-                var tempList: Array<String> =
-                    arrayOf(id, date, map, rate)
-                folders.add(tempList)
-            }
-
-        }
-        */
 
         //리사이클러 뷰 연결
         val test1 : Array<String> = arrayOf("1","2","3","4")
@@ -86,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     fun clickFolder(num :Int){
 
         val intent= Intent(this,PostActivity::class.java)
-        intent.putExtra("num",num.toString())
+        intent.putExtra("folderNum",num.toString())
         startActivity(intent)
 
 
