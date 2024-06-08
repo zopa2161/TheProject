@@ -1,5 +1,6 @@
 package com.example.termproject
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -12,7 +13,9 @@ class SQLiteHelper(context: Context?) :
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS TravelList (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Date TEXT, " +
+                "travelTitle TEXT, " +
+                "startDate TEXT, " +
+                "endDate TEXT, " +
                 "cityName TEXT, " +
                 "rate INTEGER);")
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS TravelDetail (" +
@@ -28,29 +31,30 @@ class SQLiteHelper(context: Context?) :
         onCreate(sqLiteDatabase)
     }
 
-    inner class TravelListItem(var date: String, var cityName: String, var rate: Int) {
-        override fun toString(): String {
-            return "$date - $cityName - $rate"
-        }
-    }
     inner class TravelDetailItem(var picture: String, var txt: String)
 
     companion object {
         private const val DATABASE_NAME = "mytestgo.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
     }
 
-    fun getTravelList(): ArrayList<TravelListItem>? {
-        val result = ArrayList<TravelListItem>()
+    fun getTravelList(): ArrayList<Array<String>>? {
+        val result = ArrayList<Array<String>>()
         var db: SQLiteDatabase? = null
         try {
             db = this.readableDatabase
-            val cursor = db.rawQuery("SELECT Date, cityName, rate FROM TravelList", null)
+            val cursor = db.rawQuery("SELECT * FROM TravelList", null)
+            //val cursor = db.rawQuery("SELECT TravelTitle, startDate, endDate, map, rate FROM TravelList", null)
             while (cursor.moveToNext()) {
-                val date = cursor.getString(0)
-                val cityName = cursor.getString(1)
-                val rate = cursor.getInt(2)
-                result.add(TravelListItem(date, cityName, rate))
+                val id = cursor.getString(0)
+                val travelTitle = cursor.getString(1)
+                val startDate = cursor.getString(2)
+                val endDate = cursor.getString(3)
+                val map = cursor.getString(4) ?: "없음"
+                val rate = cursor.getInt(5)
+                val temp : Array<String> = arrayOf(id, travelTitle, startDate, endDate, map, rate.toString())
+                result.add(temp)
+                //result.add(TravelListItem(date, map, rate))
             }
             cursor.close()
         } catch (e: Exception) {
@@ -81,13 +85,21 @@ class SQLiteHelper(context: Context?) :
         return result
     }
 
-    fun insertTravelItem(date: String, cityName: String, rate: Int) {
+    fun insertTravelItem(travelTitle: String, startDate: String, endDate: String, cityName: String, rate: Int) {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
-            put("Date", date)
+            put("travelTitle", travelTitle)
+            put("startDate", startDate)
+            put("endDate", endDate)
             put("cityName", cityName)
             put("rate", rate)
         }
         db.insert("TravelList", null, contentValues)
+    }
+
+    fun deleteTravelItem(id: Int) {
+        val db = this.writableDatabase
+        db.delete("TravelList", "ID=?", arrayOf(id.toString()))
+        db.delete("TravelDetail", "d_ID=?", arrayOf(id.toString()))
     }
 }
