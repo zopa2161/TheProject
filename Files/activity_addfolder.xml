@@ -13,11 +13,28 @@
         android:orientation="vertical"
         tools:ignore="MissingClass">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#222121"
+            android:elevation="4dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="여행 목록 추가"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </androidx.appcompat.widget.Toolbar>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1. 제목 입력"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -32,11 +49,17 @@
             android:singleLine="true"
             android:hint="제목 입력(20자 제한)" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="40dp"
+            android:background="?android:attr/listDivider" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2. 날짜 선택"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -90,11 +113,17 @@
             android:layout_gravity="center_horizontal"
             android:textSize="18sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="40dp"
+            android:background="?android:attr/listDivider" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3. 장소 선택"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -141,11 +170,17 @@
             android:layout_gravity="center_horizontal"
             android:textSize="18sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="40dp"
+            android:background="?android:attr/listDivider" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4. 평점 선택"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -154,6 +189,7 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:progressTint="#FFC81E"
             android:numStars="5"
             android:stepSize="1.0"
             android:layout_gravity="center_horizontal"

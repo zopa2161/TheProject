@@ -2,7 +2,9 @@ package com.example.termproject
 
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.termproject.SQLiteHelper
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.termproject.databinding.ActivityMainBinding
+import androidx.appcompat.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
     val databaseName = "trip"
@@ -23,32 +26,40 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     var folders: ArrayList<Array<String>>? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 폴더 추가 버튼 intent
+        // 상태표시줄 색 변경
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = resources.getColor(android.R.color.black)
+
+        // 툴바
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // 프로젝트 이름 숨기기
+
+        // 추가 버튼
         val button: Button = findViewById(R.id.addButton)
         button.setOnClickListener {
             val intent = Intent(this, AddFolderActivity::class.java)
             startActivity(intent)
         }
 
-        //액티비티가 시작하면 자동으로 데이터베이스 가져오기
+        // 액티비티가 시작하면 자동으로 데이터베이스 가져오기
         sqLiteHelper = SQLiteHelper(this)
         folders = sqLiteHelper?.getTravelList()
 
-        //리사이클러 뷰 초기화
+        // 리사이클러 뷰 초기화
         recyclerView = binding.recyclerView
 
-        //리사이클러 뷰 연결
+        // 리사이클러 뷰 연결
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = folders?.let { FolderAdapter(this, it) }
-        //folders는 arraylist<array<String>>형태의 이중 리스트로
-        //sql에서 받아온 데이터값들임
+        // folders는 arraylist<array<String>>형태의 이중 리스트로
+        // sql에서 받아온 데이터값들임
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
                 this,
@@ -58,8 +69,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clickFolder(num :Int) {
-        val intent= Intent(this,PostActivity::class.java)
-        intent.putExtra("folderNum",num.toString())
+        val intent= Intent(this, PostActivity::class.java)
+        intent.putExtra("folderNum", num.toString())
         startActivity(intent)
     }
 
