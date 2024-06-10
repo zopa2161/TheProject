@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteFolder(id: Int, position: Int) {
-        sqLiteHelper?.deleteTravelItem(id)
+        sqLiteHelper?.deletePostItem(id)
         folders?.removeAt(position)
         //post 데이터 베이스에서도 같이 삭제해야함
         recyclerView.adapter?.notifyItemRemoved(position)

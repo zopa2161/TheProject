@@ -26,16 +26,21 @@ class PostAdapter (main: PostActivity,
         //항목 뷰를 가지는 뷰 홀더를 준비하기 위해 자동 호출
         val binding = (holder as PostViewHolder).binding
 
-        val num = datas!![position][0].toInt()
+        val num = datas!![position][1].toInt()
 
-        binding.imageWrite.setImageURI(Uri.parse(datas!![position][1]))
+        binding.imageWrite.setImageURI(Uri.parse(datas!![position][2]))
 
-        binding.txt.text = datas[position][2]
+        binding.txt.text = datas[position][3]
 
         binding.itemRoot.setOnClickListener {
 
             postA.clickPost(num)// 인자로 눌려진 데이터의 값이 들어가야한다.
 
+        }
+
+        binding.itemRoot.setOnLongClickListener {
+            postA.DeletePopup(num, position)
+            true
         }
 
 

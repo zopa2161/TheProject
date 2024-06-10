@@ -18,6 +18,7 @@ class SQLiteHelper(context: Context?) :
                 "rate INTEGER);")
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS TravelDetail (" +
                 "d_ID INTEGER, " +
+                "p_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "picture TEXT, " +
                 "txt TEXT, " +
                 "FOREIGN KEY (d_ID) REFERENCES TravelList(ID));")
@@ -39,7 +40,7 @@ class SQLiteHelper(context: Context?) :
 
     companion object {
         private const val DATABASE_NAME = "mytestgo.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
     }
 
     fun getTravelList(): ArrayList<Array<String>>? {
@@ -77,9 +78,11 @@ class SQLiteHelper(context: Context?) :
             val cursor = db.rawQuery("SELECT * FROM TravelDetail where d_ID = $fid", null)
             while (cursor.moveToNext()) {
                 val id = cursor.getString(0)
-                val picture = cursor.getString(1)
-                val txt = cursor.getString(2)
-                val temp : Array<String> = arrayOf(id, picture, txt)
+                val pid = cursor.getString(1)
+                val picture = cursor.getString(2)
+                val txt = cursor.getString(3)
+
+                val temp : Array<String> = arrayOf(id,pid, picture, txt)
                 result.add(temp)
             }
             cursor.close()
@@ -117,5 +120,11 @@ class SQLiteHelper(context: Context?) :
         val db = this.writableDatabase
         db.delete("TravelList", "ID=?", arrayOf(id.toString()))
         db.delete("TravelDetail", "d_ID=?", arrayOf(id.toString()))
+    }
+
+    fun deletePostItem(id: Int) {
+        val db = this.writableDatabase
+
+        db.delete("TravelDetail", "p_ID=?", arrayOf(id.toString()))
     }
 }

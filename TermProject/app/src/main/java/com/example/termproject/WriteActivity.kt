@@ -33,6 +33,7 @@ class WriteActivity : AppCompatActivity(){
     lateinit var binding: ActivityWriteBinding
     private var sqLiteHelper: SQLiteHelper? = null
     var imageUri :Uri? = null
+    lateinit var folderName:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +41,8 @@ class WriteActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         val folderNum = intent.getStringExtra("folderNum")
+        val fN = intent.getStringExtra("folderName")
+        folderName = fN!!
         sqLiteHelper = SQLiteHelper(this)
 
         binding.imageWrite.isClickable = true
@@ -47,14 +50,7 @@ class WriteActivity : AppCompatActivity(){
             openGallery()
         }
         binding.addButton.setOnClickListener {
-            //여기서 sql에 데이터 추가
-            /*
-            if(!binding.imageWrite.isActivated() or !binding.txtWrite.isActivated()){
-                //토스트 메세지
-                //암튼 두개중 하나만 없어도 안된다는 메세지를 뛰워야함
-            }
 
-            */
             if(imageUri == null){
                 Toast.makeText(this, "이미지가 없습니다", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -70,6 +66,7 @@ class WriteActivity : AppCompatActivity(){
 
                 val intent = Intent(this,PostActivity::class.java)
                 intent.putExtra("folderNum", folderNum)
+                intent.putExtra("folderName", folderName)
                 startActivity(intent)
                 finish()
 
@@ -81,6 +78,7 @@ class WriteActivity : AppCompatActivity(){
 
             val intent = Intent(this,PostActivity::class.java)
             intent.putExtra("folderNum", folderNum)
+            intent.putExtra("folderName", folderName)
             startActivity(intent)
             finish()
 
