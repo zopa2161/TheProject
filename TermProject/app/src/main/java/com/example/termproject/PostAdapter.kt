@@ -1,5 +1,6 @@
 package com.example.termproject
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,12 +26,15 @@ class PostAdapter (main: PostActivity,
         //항목 뷰를 가지는 뷰 홀더를 준비하기 위해 자동 호출
         val binding = (holder as PostViewHolder).binding
 
-        binding.num.text = datas!![position][0]
+        val num = datas!![position][0].toInt()
+
+        binding.imageWrite.setImageURI(Uri.parse(datas!![position][1]))
+
         binding.txt.text = datas[position][2]
 
         binding.itemRoot.setOnClickListener {
 
-            postA.clickPost(binding.num.text.toString().toInt())// 인자로 눌려진 데이터의 값이 들어가야한다.
+            postA.clickPost(num)// 인자로 눌려진 데이터의 값이 들어가야한다.
 
         }
 

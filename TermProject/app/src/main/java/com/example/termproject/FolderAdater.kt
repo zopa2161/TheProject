@@ -32,17 +32,23 @@ class FolderAdapter(main: MainActivity,
         //항목 뷰를 가지는 뷰 홀더를 준비하기 위해 자동 호출
         val binding = (holder as FolderViewHolder).binding
 
+        val num = datas!![position][0].toInt()
+
         //datas[position][0] // 이런식으로 데이터를 사용해야할듯?
-        binding.num.text = datas!![position][0]
-        binding.location.text = datas[position][1]//받아온 데이터 값을 주르륵 연결해야함
-        binding.date.text = datas[position][2]
-        binding.rating.text = datas[position][3]
+        binding.title.text = datas[position][1]
+        binding.date.text = "날짜: " + datas[position][2] + " ~ " + datas[position][3]
+        binding.location.text = "장소: " + datas[position][4]
+        binding.rating.text = "평점: " + "★".repeat(datas[position][5].toInt())
         binding.itemRoot.setOnClickListener {
             //클릭하면
             //여기서 포스트액티비티로 넘어가는 작업 수행
             //mainA.clickFolder(position)//테스트 함수
-            mainA.clickFolder(binding.num.text.toString().toInt())// 인자로 눌려진 데이터의 값이 들어가야한다.
+            mainA.clickFolder(num, datas[position][1])// 인자로 눌려진 데이터의 값이 들어가야한다.
 
+        }
+        binding.itemRoot.setOnLongClickListener {
+            mainA.DeletePopup(num, position)
+            true
         }
 
 

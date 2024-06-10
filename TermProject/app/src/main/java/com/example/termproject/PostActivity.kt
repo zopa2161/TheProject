@@ -34,7 +34,7 @@ class PostActivity :AppCompatActivity(){
 
 
         val folderNum = intent.getStringExtra("folderNum")
-        binding.mainTextView.text = folderNum.toString()
+        binding.mainTextView.text = intent.getStringExtra("folderName")
 
 
 

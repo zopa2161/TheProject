@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,7 @@ class WriteActivity : AppCompatActivity(){
 
     lateinit var binding: ActivityWriteBinding
     private var sqLiteHelper: SQLiteHelper? = null
+    var imageUri :Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,17 +55,25 @@ class WriteActivity : AppCompatActivity(){
             }
 
             */
-            val imageString = binding.imageWrite.drawToBitmap().toString()
-            val textWriting = binding.txtWrite.text.toString()
-            sqLiteHelper?.insertTravelDetailItem(imageString,textWriting, folderNum!!.toInt())
-
-            val intent = Intent(this,PostActivity::class.java)
-            intent.putExtra("folderNum", folderNum)
-            startActivity(intent)
-            finish()
+            if(imageUri == null){
+                Toast.makeText(this, "이미지가 없습니다", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
 
 
 
+            }
+            else{
+                this.contentResolver.takePersistableUriPermission(imageUri!!,Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val imageString = imageUri.toString()//uri를 가져오자
+                val textWriting = binding.txtWrite.text.toString()
+                sqLiteHelper?.insertTravelDetailItem(imageString,textWriting, folderNum!!.toInt())
+
+                val intent = Intent(this,PostActivity::class.java)
+                intent.putExtra("folderNum", folderNum)
+                startActivity(intent)
+                finish()
+
+            }
 
         }
 
@@ -99,6 +109,7 @@ class WriteActivity : AppCompatActivity(){
 
 
                     var ImageData: Uri? = data?.data
+                    imageUri = ImageData
                     try {
                         val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, ImageData)
                         binding.imageWrite.setImageBitmap(bitmap)

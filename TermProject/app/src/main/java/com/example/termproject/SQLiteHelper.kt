@@ -11,8 +11,10 @@ class SQLiteHelper(context: Context?) :
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS TravelList (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Date TEXT, " +
-                "map TEXT, " +
+                "travelTitle TEXT, " +
+                "startDate TEXT, " +
+                "endDate TEXT, " +
+                "cityName TEXT, " +
                 "rate INTEGER);")
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS TravelDetail (" +
                 "d_ID INTEGER, " +
@@ -46,13 +48,15 @@ class SQLiteHelper(context: Context?) :
         try {
             db = this.readableDatabase
             val cursor = db.rawQuery("SELECT * FROM TravelList", null)
-            //val cursor = db.rawQuery("SELECT Date, map, rate FROM TravelList", null)
+            //val cursor = db.rawQuery("SELECT TravelTitle, startDate, endDate, map, rate FROM TravelList", null)
             while (cursor.moveToNext()) {
                 val id = cursor.getString(0)
-                val date = cursor.getString(1)
-                val map = cursor.getString(2)
-                val rate = cursor.getInt(3)
-                val temp : Array<String> = arrayOf(id.toString(), date, map, rate.toString())
+                val travelTitle = cursor.getString(1)
+                val startDate = cursor.getString(2)
+                val endDate = cursor.getString(3)
+                val map = cursor.getString(4) ?: "없음"
+                val rate = cursor.getInt(5)
+                val temp : Array<String> = arrayOf(id, travelTitle, startDate, endDate, map, rate.toString())
                 result.add(temp)
                 //result.add(TravelListItem(date, map, rate))
             }
@@ -72,9 +76,9 @@ class SQLiteHelper(context: Context?) :
             db = this.readableDatabase
             val cursor = db.rawQuery("SELECT * FROM TravelDetail where d_ID = $fid", null)
             while (cursor.moveToNext()) {
+                val id = cursor.getString(0)
                 val picture = cursor.getString(1)
                 val txt = cursor.getString(2)
-                val id = cursor.getString(0)
                 val temp : Array<String> = arrayOf(id, picture, txt)
                 result.add(temp)
             }
@@ -87,10 +91,13 @@ class SQLiteHelper(context: Context?) :
         return result
     }
 
-    fun insertTravelItem(date: String, rate: Int) {
+    fun insertTravelItem(travelTitle: String, startDate: String, endDate: String, cityName: String, rate: Int) {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
-            put("Date", date)
+            put("travelTitle", travelTitle)
+            put("startDate", startDate)
+            put("endDate", endDate)
+            put("cityName", cityName)
             put("rate", rate)
         }
         db.insert("TravelList", null, contentValues)
@@ -104,5 +111,11 @@ class SQLiteHelper(context: Context?) :
             put("txt", text)
         }
         db.insert("TravelDetail", null, contentValues)
+    }
+
+    fun deleteTravelItem(id: Int) {
+        val db = this.writableDatabase
+        db.delete("TravelList", "ID=?", arrayOf(id.toString()))
+        db.delete("TravelDetail", "d_ID=?", arrayOf(id.toString()))
     }
 }
