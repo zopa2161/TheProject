@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation("com.naver.maps:map-sdk:3.18.0")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
